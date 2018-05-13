@@ -1,0 +1,9 @@
+you can go back to copy the dependencies + xxx things on the new repo from re-cast
+also don't forget to put those script things (babel: 'xxx') - re-cast
+then run npm install
+then you got node modules
+copy the gitignore things
+
+live-server and babel/babel watch
+
+refer to react about how to organize the folder
