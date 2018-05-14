@@ -5,19 +5,21 @@ import AddMovie from './addmovieBar.jsx';
 
 export default class App extends React.Component {
   constructor(props) {
-    console.log(props.movies);
     super(props);
     this.state = {
+      currentCategory: false,
       displayMovies: props.movies,
       searchInput: '',
       addInput:'',
+      b1Color: 'white', 
+      b2Color: 'white',
     };
   }
 
   handleAdd() {
     this.props.movies.push({title: this.state.addInput, watched: false});
     this.setState({
-      displayMovies: this.props.movies,
+      displayMovies: this.props.movies.filter(movie => movie.watched === false),
       addInput:'',
     });
     event.preventDefault();
@@ -37,22 +39,26 @@ export default class App extends React.Component {
   
   handleSearch() {
     this.setState({
-      displayMovies : this.props.movies.filter((obj) => obj.title.toLowerCase().indexOf(this.state.searchInput.toLowerCase()) != -1),
+      displayMovies : this.state.displayMovies.filter((obj) => obj.title.toLowerCase().indexOf(this.state.searchInput.toLowerCase()) != -1),
       searchInput: '',
     });
     event.preventDefault();
   }
 
   handleToggleWatch(movie) {
-    this.props.movies[this.props.movies.indexOf(movie)]['watched'] = !movie.watched;
+    movie.watched = !movie.watched;
     this.setState({
-      displayMovies: this.props.movies,
+      displayMovies: this.props.movies.filter(item => item.watched === movie.watched),
+      b1Color: (movie.watched? '#C4EADA': 'white'),
+      b2Color: (movie.watched? 'white': '#C4EADA'),
     });
   }
 
-  handleToggleMovie(response) {
+  handleToggleMovieCategory(response) {
     this.setState({
-      displayMovies: this.props.movies.filter((movie) => movie.watched === response)
+      displayMovies: this.props.movies.filter(movie => movie.watched === response),
+      b1Color: (response? '#C4EADA': 'white'),
+      b2Color: (response? 'white': '#C4EADA'),
     });
   }
 
@@ -74,8 +80,8 @@ export default class App extends React.Component {
         <nav className="navBar">
           <div><Search searchInput={this.state.searchInput} handleSearch={this.handleSearch.bind(this)} handleSearchChange={this.handleChangeSearch.bind(this)}/></div>
         </nav>
-        <button onClick={() => this.handleToggleMovie(true)}>Watch</button>
-        <button onClick={() => this.handleToggleMovie(false)}>To Watch</button>
+        <button className="category" onClick={() => this.handleToggleMovieCategory(true)} style={{backgroundColor:this.state.b1Color}} >Watch</button>
+        <button className="category" onClick={() => this.handleToggleMovieCategory(false)} style={{backgroundColor:this.state.b2Color}}>To Watch</button>
         {movielist}
       </div>
     );

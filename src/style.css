@@ -7,17 +7,31 @@ body {
 }
 .listItem {
     border: 1px solid black;
-    width: 700px;
+    width: auto;
+    height: 50px;
     font-family: 'Lato', sans-serif;
     font-size: 20px;
     padding: 25px, 40px;
     padding-left: 30px;
 }
-label {
-    text-align: right;
-    font-size: 16px;
-    width: 100px;
-    margin-right: 10px;
-    background-color: #8cff1a;
-    
+.category {
+   height: 50px;
+   width: 100px;
+}
+
+.selectCatrgory {
+    background-color:#C4EADA;
+}
+.scrollDown {
+    height: 120px;
+    border: 1px solid black;
+    padding-left: 30px;
+}
+.description {
+    float: left;
+}
+.image {
+    float: right;
+    height: 80px;
+    width: 80px;
 }
