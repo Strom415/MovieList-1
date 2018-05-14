@@ -4,9 +4,9 @@ import $ from 'jquery';
 export function searchMovieID(moviename, callback) {
 
   //https://api.themoviedb.org/3/search/movie?api_key={api_key}&query=Jack+Reacher
-  var url = 'https://api.themoviedb.org/3/search/movie?api_key=' + window.TMDB_API_KEY + '&query=' + moviename.split(' ').join('+');
+  var url1 = 'https://api.themoviedb.org/3/search/movie?api_key=' + window.TMDB_API_KEY + '&query=' + moviename.split(' ').join('+');
 
-  $.get(url)
+  $.get(url1)
       .then(function successCallback(response) {
         callback(response);
       })
@@ -17,10 +17,10 @@ export function searchMovieID(moviename, callback) {
 
 export function searchTMDB(movieID, callback) {
 
-  //https://api.themoviedb.org/3/movie/10428?api_key=2ede88a914f39ec687484df4a6649fc8&language=en-US
-  var url = 'https://api.themoviedb.org/3/movie/' + movieID + '?api_key='+ window.TMDB_API_KEY + '&language=en-US';
+  //https://api.themoviedb.org/3/movie/10428?api_key={key}&language=en-US
+  var url2 = 'https://api.themoviedb.org/3/movie/' + movieID + '?api_key='+ window.TMDB_API_KEY + '&language=en-US';
 
-  $.get(url)
+  $.get(url2)
       .then(function successCallback(response) {
         callback(response);
         // this callback will be called asynchronously
@@ -30,5 +30,20 @@ export function searchTMDB(movieID, callback) {
         // called asynchronously if an error occurs
         // or server returns response with an error status.
       });
+}
+
+export function searchPopularMovies(callback) {
+  //http://api.themoviedb.org/3/movie/upcoming?api_key={key}
+  var url3 = 'http://api.themoviedb.org/3/movie/popular?api_key=' + window.TMDB_API_KEY;
+
+  $.get(url3)
+      .then(function successCallback(response) {
+        callback(response.results);
+      })
+      .catch(function errorCallback(response) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+      });
+
 }
 

@@ -7,3 +7,21 @@ copy the gitignore things
 live-server and babel/babel watch
 
 refer to react about how to organize the folder
+
+https://fakefish.github.io/react-webpack-cookbook/Getting-started.html
+
+Steps(some):
+- npm i webpack --save
+- npm i webpack-dev-server --save
+- modify webpack.config.js
+Go to http://localhost:8080
+
+React
+- npm install babel-loader --save-dev
+- modify webpack.config.js
+- modify html
+- npm run dev
+
+CSS:
+- npm install css-loader style-loader --save-dev
+- modify webpack.config.js

@@ -11,5 +11,5 @@ var exampleMovies = [
     {title: 'Ex Machina', watched: false}
 ];
 
-ReactDOM.render(<App movies={exampleMovies}/>, document.getElementById('app'));
+ReactDOM.render(<App movies={[]}/>, document.getElementById('app'));
 

@@ -2,6 +2,7 @@ import React from 'react';
 import MovieListItem from './movieItem.jsx';
 import Search from './searchBar.jsx';
 import AddMovie from './addmovieBar.jsx';
+import {searchPopularMovies} from '../lib/searchTMDB.js';
 
 
 export default class App extends React.Component {
@@ -15,6 +16,17 @@ export default class App extends React.Component {
       b1Color: 'white', 
       b2Color: 'white',
     };
+  }
+
+  componentDidMount() {
+    searchPopularMovies((results) => {
+      for (var i = 0; i < results.length; i++) {
+        this.props.movies.push({title: results[i].title, watched: false});
+      }
+    });
+    this.setState({
+      displayMovies: this.props.movies,
+    });
   }
 
   handleAdd() {
