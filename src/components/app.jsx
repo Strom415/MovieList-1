@@ -3,6 +3,7 @@ import MovieListItem from './movieItem.jsx';
 import Search from './searchBar.jsx';
 import AddMovie from './addmovieBar.jsx';
 
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -80,6 +81,7 @@ export default class App extends React.Component {
         <nav className="navBar">
           <div><Search searchInput={this.state.searchInput} handleSearch={this.handleSearch.bind(this)} handleSearchChange={this.handleChangeSearch.bind(this)}/></div>
         </nav>
+        {/* <button>Sort By Rating</button> */}
         <button className="category" onClick={() => this.handleToggleMovieCategory(true)} style={{backgroundColor:this.state.b1Color}} >Watch</button>
         <button className="category" onClick={() => this.handleToggleMovieCategory(false)} style={{backgroundColor:this.state.b2Color}}>To Watch</button>
         {movielist}

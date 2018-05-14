@@ -9,3 +9,9 @@ compiled/
 
 ## bundle ##
 build/bundle.js
+
+## API key ##
+src/config/tmdb.js
+
+
+
