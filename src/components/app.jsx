@@ -10,29 +10,36 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       currentCategory: false,
-      displayMovies: props.movies,
+      displayMovies: this.props.movies,
+      defaultMovies: [],
       searchInput: '',
       addInput:'',
       b1Color: 'white', 
-      b2Color: 'white',
+      b2Color: '#C4EADA',
     };
   }
 
   componentDidMount() {
+    var newMovies = [];
     searchPopularMovies((results) => {
       for (var i = 0; i < results.length; i++) {
-        this.props.movies.push({title: results[i].title, watched: false});
+        newMovies.push({title: results[i].title, watched: false});
+        //should not modify props!!!!!!!!!
+        //this.props.movies.push({title: results[i].title, watched: false});
+        this.setState({
+          defaultMovies: newMovies,
+          displayMovies: newMovies,
+        });
       }
-    });
-    this.setState({
-      displayMovies: this.props.movies,
     });
   }
 
   handleAdd() {
-    this.props.movies.push({title: this.state.addInput, watched: false});
+    let defaultM = this.state.defaultMovies;
+    defaultM.push({title: this.state.addInput, watched: false});
     this.setState({
-      displayMovies: this.props.movies.filter(movie => movie.watched === false),
+      defaultMovies: defaultM,
+      displayMovies: this.state.defaultMovies.filter(movie => movie.watched === false),
       addInput:'',
     });
     event.preventDefault();
@@ -61,15 +68,24 @@ export default class App extends React.Component {
   handleToggleWatch(movie) {
     movie.watched = !movie.watched;
     this.setState({
-      displayMovies: this.props.movies.filter(item => item.watched === movie.watched),
-      b1Color: (movie.watched? '#C4EADA': 'white'),
-      b2Color: (movie.watched? 'white': '#C4EADA'),
+      //keep current status of movie category:
+      //displayMovies: this.props.movies.filter(item => item.watched === !movie.watched),
+      // go to the opposite category
+
+      // displayMovies: this.state.defaultMovies.filter(item => item.watched === movie.watched),
+      // b1Color: (movie.watched? '#C4EADA': 'white'),
+      // b2Color: (movie.watched? 'white': '#C4EADA'),
+      
+      // stay on the current category
+      displayMovies: this.state.defaultMovies.filter(item => item.watched === !movie.watched),
+      b2Color: (movie.watched? '#C4EADA': 'white'),
+      b1Color: (movie.watched? 'white': '#C4EADA'),
     });
   }
 
   handleToggleMovieCategory(response) {
     this.setState({
-      displayMovies: this.props.movies.filter(movie => movie.watched === response),
+      displayMovies: this.state.defaultMovies.filter(movie => movie.watched === response),
       b1Color: (response? '#C4EADA': 'white'),
       b2Color: (response? 'white': '#C4EADA'),
     });
