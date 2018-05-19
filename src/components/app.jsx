@@ -2,7 +2,7 @@ import React from 'react';
 import MovieListItem from './movieItem.jsx';
 import Search from './searchBar.jsx';
 import AddMovie from './addmovieBar.jsx';
-import {searchPopularMovies} from '../lib/searchTMDB.js';
+import {searchMovieName, searchPopularMovies} from '../lib/searchTMDB.js';
 
 
 export default class App extends React.Component {
@@ -25,22 +25,26 @@ export default class App extends React.Component {
       for (var i = 0; i < results.length; i++) {
         newMovies.push({title: results[i].title, watched: false});
         //should not modify props!!!!!!!!!
-        //this.props.movies.push({title: results[i].title, watched: false});
-        this.setState({
-          defaultMovies: newMovies,
-          displayMovies: newMovies,
-        });
+        //this.props.movies.push({title: results[i].title, watched: false}); 
       }
+      this.setState({
+        defaultMovies: newMovies,
+        displayMovies: newMovies,
+      });
     });
+
   }
 
   handleAdd() {
     let defaultM = this.state.defaultMovies;
-    defaultM.push({title: this.state.addInput, watched: false});
-    this.setState({
-      defaultMovies: defaultM,
-      displayMovies: this.state.defaultMovies.filter(movie => movie.watched === false),
-      addInput:'',
+    searchMovieName(this.state.addInput, (data) => {
+      var movieName = data.results[0].title;
+      defaultM.push({title: movieName, watched: false});
+      this.setState({
+        defaultMovies: defaultM,
+        displayMovies: this.state.defaultMovies.filter(movie => movie.watched === false),
+        addInput:'',
+      });
     });
     event.preventDefault();
   }
@@ -75,7 +79,7 @@ export default class App extends React.Component {
       // displayMovies: this.state.defaultMovies.filter(item => item.watched === movie.watched),
       // b1Color: (movie.watched? '#C4EADA': 'white'),
       // b2Color: (movie.watched? 'white': '#C4EADA'),
-      
+
       // stay on the current category
       displayMovies: this.state.defaultMovies.filter(item => item.watched === !movie.watched),
       b2Color: (movie.watched? '#C4EADA': 'white'),

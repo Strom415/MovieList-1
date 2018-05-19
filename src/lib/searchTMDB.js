@@ -14,13 +14,26 @@ export function searchMovieID(moviename, callback) {
       });
 }
 
+export function searchMovieName(moviename, callback) {
+
+  //https://api.themoviedb.org/3/search/movie?api_key={api_key}&query=Jack+Reacher
+  var url2 = 'https://api.themoviedb.org/3/search/movie?api_key=' + window.TMDB_API_KEY + '&query=' + moviename.split(' ').join('+');
+
+  $.get(url2)
+      .then(function successCallback(response) {
+        callback(response);
+      })
+      .catch(function errorCallback(response) {
+      });
+}
+
 
 export function searchTMDB(movieID, callback) {
 
   //https://api.themoviedb.org/3/movie/10428?api_key={key}&language=en-US
-  var url2 = 'https://api.themoviedb.org/3/movie/' + movieID + '?api_key='+ window.TMDB_API_KEY + '&language=en-US';
+  var url3 = 'https://api.themoviedb.org/3/movie/' + movieID + '?api_key='+ window.TMDB_API_KEY + '&language=en-US';
 
-  $.get(url2)
+  $.get(url3)
       .then(function successCallback(response) {
         callback(response);
         // this callback will be called asynchronously
